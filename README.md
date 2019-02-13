@@ -33,5 +33,6 @@ Connect RST,SWIM,GND,3.3V to programmer and use stm8flash to burn an ihx image f
 NOTE
 ----
 On fresh HC11 boards, you may need to unlock the module for writing. Use..
+
 stm8flash -c stlinkv2 -p stm8s003f3 -u  
 
