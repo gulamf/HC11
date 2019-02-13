@@ -28,7 +28,7 @@ Compiler used SDCC v3.8
 
 HARDWARE
 --------
-Writing the image fie to HC11 requires a STLINK/V2 programmer.
+Writing the image file to HC11 requires a STLINK/V2 programmer.
 Connect RST,SWIM,GND,3.3V to programmer and use stm8flash to burn an ihx image file to the module.
 
 NOTE
