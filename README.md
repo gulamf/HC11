@@ -7,6 +7,7 @@ This a conversion of the CC1101 Arduino Library for the HC11 module.
 Usage
 -----
 compile.sh to compile example.c
+
 flash.sh to burn image to HC11.
 
 see example.c on how to send and receive data.
