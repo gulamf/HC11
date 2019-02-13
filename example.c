@@ -54,9 +54,9 @@ int toLqi(char raw) {
 
 
 void main() {
-	uint8_t length,  rssi,  crc_ok, lqi;
-	char packet[BUFFER_LEN];
-    	unsigned long now = 0;
+    uint8_t length,  rssi,  crc_ok, lqi;
+    char packet[BUFFER_LEN];
+    unsigned long now = 0;
 
 // setup
 
@@ -84,50 +84,43 @@ void main() {
 
 
 // loop
-    while(1) {
-
-    if (packetWaiting) {
-	PinInputInterruptDisable(GD0_PORT,GD0_PIN);
-        packetWaiting = FALSE;
-        if (cc1101_receiveData(packet, &length, &rssi, &crc_ok, &lqi) > 0) {
-            printf("Received packet...\n");
-            if (!crc_ok) {
-                printf("crc not ok\n");
+    while(1) {    
+        if (packetWaiting) {
+    	PinInputInterruptDisable(GD0_PORT,GD0_PIN);
+            packetWaiting = FALSE;
+            if (cc1101_receiveData(packet, &length, &rssi, &crc_ok, &lqi) > 0) {
+                printf("Received packet...\n");
+                if (!crc_ok) {
+                    printf("crc not ok\n");
+                }
+                printf("lqi: ");
+                printf("%d ",toLqi(lqi));
+                printf("rssi: ");
+                printf("%d ",toRssi(rssi));
+                printf("dBm\n");
+    
+                if (crc_ok && length > 0) {
+                    printf("packet: len ");
+                    printf("%d\n",length);
+                    printf("data: \n");
+                    printf("%s\n",(const char *) packet);
+                }
             }
-            printf("lqi: ");
-            printf("%d ",toLqi(lqi));
-            printf("rssi: ");
-            printf("%d ",toRssi(rssi));
-            printf("dBm\n");
-
-            if (crc_ok && length > 0) {
-                printf("packet: len ");
-                printf("%d\n",length);
-                printf("data: \n");
-                printf("%s\n",(const char *) packet);
-            }
+    	    PinInputInterruptEnable(GD0_PORT,GD0_PIN);
         }
-
-	PinInputInterruptEnable(GD0_PORT,GD0_PIN);
+        now++;
+        if (now > lastSend + sendDelay) {
+    	    PinInputInterruptDisable(GD0_PORT,GD0_PIN);
+    
+            lastSend = now;
+            const char *message = "hello world HC11";
+            // We also need to include the 0 byte at the end of the string
+            length = strlen(message)  + 1;
+            strncpy((char *) packet, message, length);
+    
+            cc1101_sendData(packet,length);
+            printf("Sent packet...");
+            PinInputInterruptEnable(GD0_PORT,GD0_PIN);
+        }
     }
-    now++;
-    if (now > lastSend + sendDelay) {
-	PinInputInterruptDisable(GD0_PORT,GD0_PIN);
-
-        lastSend = now;
-        const char *message = "hello world HC11";
-        // We also need to include the 0 byte at the end of the string
-        length = strlen(message)  + 1;
-        strncpy((char *) packet, message, length);
-
-        cc1101_sendData(packet,length);
-        printf("Sent packet...");
-
-	PinInputInterruptEnable(GD0_PORT,GD0_PIN);
-    }
-
-
-
-    }
-
 }
