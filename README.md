@@ -1,7 +1,7 @@
 HC11 CC1101
 ==============
 
-This a conversion of the CC1101 Arduino Library to the HC11 module.
+This a conversion of the CC1101 Arduino Library for the HC11 module.
 
 
 Usage
