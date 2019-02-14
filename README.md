@@ -22,6 +22,9 @@ https://github.com/veonik/arduino-cc1101.git
 HC11 Module info from :
 https://mvdlande.wordpress.com/2016/09/03/reprogramming-a-hc-11-cc1101-433mhz-wireless-transceiver-module/
 
+STM8 Library from
+https://github.com/lujji/stm8-bare-min
+
 SOFTWARE
 --------
 Compiler used SDCC v3.8
