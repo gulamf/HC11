@@ -86,7 +86,7 @@ void main() {
 // loop
     while(1) {    
         if (packetWaiting) {
-    	PinInputInterruptDisable(GD0_PORT,GD0_PIN);
+    	    PinInputInterruptDisable(GD0_PORT,GD0_PIN);
             packetWaiting = FALSE;
             if (cc1101_receiveData(packet, &length, &rssi, &crc_ok, &lqi) > 0) {
                 printf("Received packet...\n");
